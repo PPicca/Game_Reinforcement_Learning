@@ -98,29 +98,33 @@ def run_episode(for_training):
         None
     """
     epsilon = TRAINING_EP if for_training else TESTING_EP
+    gamma_step = 1
+    epi_reward = 0
 
-    epi_reward = None
-    # initialize for each episode
-    # TODO Your code here
 
     (current_room_desc, current_quest_desc, terminal) = framework.newGame()
 
     while not terminal:
         # Choose next action and execute
-        # TODO Your code here
+        current_room_id = dict_room_desc[current_room_desc]
+        current_quest_id = dict_quest_desc[current_quest_desc]
+        action_index, object_index = epsilon_greedy(current_room_id, current_quest_id, q_func, epsilon)
+        next_room_desc, next_quest_desc, reward, terminal = framework.step_game(current_room_desc, current_quest_desc, action_index, object_index)
 
         if for_training:
             # update Q-function.
-            # TODO Your code here
-            pass
+            next_room_id = dict_room_desc[next_room_desc]
+            next_quest_id = dict_quest_desc[next_quest_desc]
+            tabular_q_learning(q_func, current_room_id, current_quest_id, action_index, object_index, reward,next_room_id, next_quest_id, terminal)
 
         if not for_training:
             # update reward
-            # TODO Your code here
-            pass
+            epi_reward += gamma_step * reward
+            gamma_step += GAMMA
 
         # prepare next step
-        # TODO Your code here
+        current_room_desc = next_room_desc
+        current_quest_desc = next_quest_desc
 
     if not for_training:
         return epi_reward

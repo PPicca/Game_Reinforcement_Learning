@@ -205,6 +205,7 @@ def make_all_states_index():
 
     return (dictionary_room_desc, dictionary_quest_desc)
 
+
 # def gameOver(room_index, quest_index, action_index, object_index):
 #     if (command_is_valid[room_index, action_index, object_index]==1):
 #         # quest has been finished
