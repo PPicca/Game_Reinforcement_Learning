@@ -1,2 +1,1 @@
-# MIT_Project_5_Text_Based_Game
- 
+# MIT - Machine Learning with Python project.
